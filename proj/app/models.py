@@ -18,16 +18,18 @@ class employee(person):
     email= models.EmailField()
     password_encryption = models.CharField(max_length=300)
     role=models.CharField(max_length=300)
-    last_login=models.DateTimeField()
+    last_login=models.DateTimeField(auto_now=True)
     is_logged_in = models.BooleanField()
 
 class session(models.Model):
     session_id = models.BigIntegerField(primary_key = True)
     user_id = models.ForeignKey(employee,on_delete=models.CASCADE)
-    login_time=models.DateTimeField()
-    logout_time= models.DateTimeField()
+    login_time=models.DateTimeField(auto_now_add=True)
+    logout_time= models.DateTimeField(auto_now=True)
     IP_address=models.GenericIPAddressField()
     device_info =models.CharField(max_length=400)
+
+
 
 
 
