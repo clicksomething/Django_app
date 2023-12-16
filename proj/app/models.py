@@ -28,3 +28,5 @@ class session(models.Model):
     logout_time= models.DateTimeField(auto_now=True)
     IP_address=models.GenericIPAddressField()
     device_info =models.CharField(max_length=400)
+class amer(models.Model):
+    hello_name = models.CharField(max_length=300)
