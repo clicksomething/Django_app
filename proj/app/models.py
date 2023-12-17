@@ -15,12 +15,18 @@ class person(models.Model):
 class stranger(person):
     is_banned = models.BooleanField()
 
+    def __str__(self): # a standard function for displaying info in txt when calling on display function in django shell
+        return  f'{self.first_name} {self.last_name} ({self.person_id})'
+
 class employee(person):
     email= models.EmailField()
     password_encryption = models.CharField(max_length=300)
     role=models.CharField(max_length=300)
     last_login=models.DateTimeField(auto_now=True)
     is_logged_in = models.BooleanField()
+
+    def __str__(self) -> str:
+        return f'({self.first_name},{self.last_name},{self.email},{self.role})'
 
 class session(models.Model):
     session_id = models.BigIntegerField(primary_key = True)
@@ -29,6 +35,9 @@ class session(models.Model):
     logout_time= models.DateTimeField(auto_now=True)
     IP_address=models.GenericIPAddressField()
     device_info =models.CharField(max_length=400)
+    def __str__(self):
+        return f'(Session ID:{self.session_id}, User ID: {self.user_id.person_id}, Login Time: {self.login_time}, Logout Time: {self.logout_time}, IP Address: {self.IP_address}, Device Info: {self.device_info})'
+    
 
 class entry_record (models.Model):
     entry_record_id = models.BigIntegerField(primary_key = True)
@@ -36,6 +45,10 @@ class entry_record (models.Model):
     entry_date = models.DateTimeField(auto_now_add=True)
     out_date = models.DateTimeField (auto_now=True)
     stranger_id = models.ForeignKey(stranger,on_delete=models.CASCADE)
+    def __str__(self):
+        return f'(Stranger:{self.stranger_id.first_name}, {self.stranger_id.middle_name}, {self.stranger_id.last_name},Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry},Entry Date: {self.entry_date}, Out Date: {self.out_date}, Stranger ID:  {self.stranger_id.person_id})'
+    def __str__(self):
+        return f'(Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry}, Entry Date: {self.entry_date}, Out Date: {self.out_date},  Stranger ID: {self.stranger_id.person_id})'
 
 class security_note (models.Model):
     entry_record_id = models.ForeignKey(entry_record,on_delete=models.CASCADE)
