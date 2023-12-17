@@ -1,32 +1,32 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from django.contrib.auth.models import Group
 gender_choices = [
     ("F", "Female"),
     ("M", "Male")
 ]
 class person(models.Model):
     person_id = models.BigIntegerField(primary_key=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length= 100)
-    middle_name = models.CharField(max_length=100)
     gender=models.CharField(max_length=20,choices=gender_choices)
+    middle_name = models.CharField(max_length=100)
     class Meta:
         abstract = True
+
 class stranger(person):
     is_banned = models.BooleanField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length= 100)
     cars = models.ManyToManyField("vehicle")
-
-
 
     def __str__(self):  # a standard function for displaying info in txt when calling on display function in django shell
         return f'(Stranger:{self.stranger_id.first_name}, {self.stranger_id.middle_name}, {self.stranger_id.last_name},Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry},Entry Date: {self.entry_date}, Out Date: {self.out_date}, Stranger ID:  {self.stranger_id.person_id})'
 
-class employee(person):
-    email= models.EmailField()
-    password_encryption = models.CharField(max_length=300)
+class User(person, AbstractUser):
     role=models.CharField(max_length=300)
     last_login=models.DateTimeField(auto_now=True)
     is_logged_in = models.BooleanField()
+    groups = models.ManyToManyField(Group, related_name="User")
     
 
     def __str__(self) -> str:
@@ -34,7 +34,7 @@ class employee(person):
 
 class session(models.Model):
     session_id = models.BigIntegerField(primary_key = True)
-    user_id = models.ForeignKey(employee,on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     login_time=models.DateTimeField(auto_now_add=True)
     logout_time= models.DateTimeField(auto_now=True)
     IP_address=models.GenericIPAddressField()
