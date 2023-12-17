@@ -14,9 +14,12 @@ class person(models.Model):
         abstract = True
 class stranger(person):
     is_banned = models.BooleanField()
+    cars = models.ManyToManyField("vehicle")
 
-    def __str__(self): # a standard function for displaying info in txt when calling on display function in django shell
-        return  f'{self.first_name} {self.last_name} ({self.person_id})'
+
+
+    def __str__(self):  # a standard function for displaying info in txt when calling on display function in django shell
+        return f'(Stranger:{self.stranger_id.first_name}, {self.stranger_id.middle_name}, {self.stranger_id.last_name},Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry},Entry Date: {self.entry_date}, Out Date: {self.out_date}, Stranger ID:  {self.stranger_id.person_id})'
 
 class employee(person):
     email= models.EmailField()
@@ -24,6 +27,7 @@ class employee(person):
     role=models.CharField(max_length=300)
     last_login=models.DateTimeField(auto_now=True)
     is_logged_in = models.BooleanField()
+    
 
     def __str__(self) -> str:
         return f'({self.first_name},{self.last_name},{self.email},{self.role})'
@@ -46,8 +50,6 @@ class entry_record (models.Model):
     out_date = models.DateTimeField (auto_now=True)
     stranger_id = models.ForeignKey(stranger,on_delete=models.CASCADE)
     def __str__(self):
-        return f'(Stranger:{self.stranger_id.first_name}, {self.stranger_id.middle_name}, {self.stranger_id.last_name},Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry},Entry Date: {self.entry_date}, Out Date: {self.out_date}, Stranger ID:  {self.stranger_id.person_id})'
-    def __str__(self):
         return f'(Entry Record ID: {self.entry_record_id}, Reason for Entry: {self.reason_for_entry}, Entry Date: {self.entry_date}, Out Date: {self.out_date},  Stranger ID: {self.stranger_id.person_id})'
 
 class security_note (models.Model):
@@ -60,3 +62,8 @@ class security_note (models.Model):
             models.UniqueConstraint(fields=['entry_record_id','stranger_id'], name = "entry_record_stranger_id")
         ]
 
+class vehicle (models.Model):
+    vehicle_id = models.BigIntegerField(primary_key = True)
+    vehicle_color = models.CharField(max_length = 100)
+    vehicle_model = models.CharField(max_length = 200)
+    vehicle_state = models.CharField(max_length= 200)
