@@ -447,18 +447,60 @@
                                         <td>0987766521</td>
                                         <td>
                                            
-                                            <a href="#" class="btn btn-warning btn-circle btn-sm">
+                                            <!-- <a href="#" class="btn btn-warning btn-circle btn-sm edit" >
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a href="#" class="btn btn-secondary btn-circle btn-sm">
+                                            <a href="#" class="btn btn-secondary btn-circle btn-sm delete">
                                                 <i class="fas fa-trash"></i>
-                                            </a></td>
+                                            </a> -->
+                                            <!-- <button type="button" class="btn btn-danger btn-sm delete">delete</button>
+<button type="button" class="btn btn-warning btn-sm edit">edit</button> -->
+
+                                            <!-- <button class="save"> Save </button>  
+        <button class="edit"> Edit </button>  
+        <button class="delete"> Delete </button>  -->
+       
+        <!-- <a href="#" class="btn btn-success btn-circle btn-sm save">
+            <i class="fas fa-check"></i>
+        </a>-->
+    </td> 
                                         </tr>
                                    
                                     
                                     
                                 </tbody>
                             </table>
+                            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>  
+                            <script>  
+                            $(document).on('click', '.edit', function() {  
+                              $(this).parent().siblings('td.data').each(function() {  
+                                var content = $(this).html();  
+                                $(this).html('<input value="' + content + '" />');  
+                              });  
+                              $(this).siblings('.save').show();  
+                              $(this).siblings('.delete').hide();  
+                              $(this).siblings('.info').hide();  
+                              $(this).hide();  
+                            });  
+                            $(document).on('click', '.save', function() {  
+                              $('input').each(function() {  
+                                var content = $(this).val();  
+                                $(this).html(content);  
+                                $(this).contents().unwrap();  
+                              }); 
+                              $(this).siblings('.info').show();   
+                              $(this).siblings('.edit').show();  
+                              $(this).siblings('.delete').show();  
+                              
+                              $(this).hide();  
+                            });  
+                            $(document).on('click', '.delete', function() {  
+                              $(this).parents('tr').remove();  
+                            });  
+                            $('.add').click(function() {  
+                              $(this).parents('table').append('<tr><td class="data"></td><td class="data"></td><td class="data"></td><td><button class="save">Save</button><button class="edit">Edit</button> <button class="delete">Delete</button></td></tr>');  
+                            });  
+                            </script>  -->
                         </div>
                     </div>
                 </div>
